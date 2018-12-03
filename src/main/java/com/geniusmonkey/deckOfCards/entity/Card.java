@@ -16,6 +16,7 @@ public class Card {
 		this.cardSuit = cardSuit;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return cardSuit;
@@ -33,5 +34,6 @@ public class Card {
 	}
 	public void setCardSuit(String cardSuit) {
 		this.cardSuit = cardSuit;
-	}	
+	}
+
 }

@@ -7,8 +7,13 @@ import java.util.Random;
 
 public class Deck {
 
-	private List<Card> cards;
+	public static final int DCARDS = 52;
+	private ArrayList<Card> cards;
+	private int half;
 	private List<Card> hand;
+	private Card[] deckOfCards;
+	private int currentCard;
+	
 
 	public Deck() {
 		cards = new ArrayList<Card>();
@@ -17,40 +22,60 @@ public class Deck {
 				cards.add(new Card(j, createCardName(i,j)));
 			}
 		}
-	}
-	
-	public List<Card> cut() {
-		int half = (new Random()).nextInt(cards.size()-1) + 1;
-			for (int i = 0; i < half; i++)
-				cards.add(cards.remove(0));
-		Collections.rotate(cards, half);	
-			return cards;
-	}	
-	
-	public void rebuild() {
-		cards.clear();
-		return;
 		
-	}
-			
-	public boolean discard(Card card) {
-		hand = new ArrayList<Card>();
-		return hand.remove(card);
+	half = (new Random()).nextInt(cards.size()-1) + 1;
+		for (int i = 0; i < half; i++) {
+			cards.add(cards.remove(0));
+		}
 	}
 	
+	public List<Card> getHand() {
+		return cards;
+	}
+	
+	public void setHand(List<Card> hand) {
+		this.hand = hand;
+	}
+	
+	public List<Card> getCards() {
+		return cards;
+	}
+	
+	public int getHalf() {
+		return half;
+	}
+	public void checkHand() {
+		for (Card card : hand) {
+			System.out.println(card.toString());
+		}
+	}
+	
+	public boolean discard(Card card) {
+			return hand.remove(card);
+		}
+	
+	public void deal(Deck deck) {
+		cards.remove(0);
+		hand.add(deck.deal()); 
+	}	
+
 	public void shuffle() {
 		Collections.shuffle(cards);
 	}
 	
+	public void cut() {
+		Collections.rotate(cards, half);			
+	}	
+	
+	//public void rebuild() {
+		//Collections.sort(cards, null);;
+	//}
+				
 	public void order() {
-       for (int i = 0; i < 0; i++)
-          System.out.println(cards);
-       //return cards;
+       Collections.unmodifiableCollection(cards);          
     }
 	
-	public Card deal() {
-		return cards.remove(0);
-	}	
+		
 		
 	private String createCardName(int suit, int value) {
 		return new StringBuilder()
@@ -103,4 +128,7 @@ public class Deck {
 		}
 		return result;
 	}
+
+
+
 }
