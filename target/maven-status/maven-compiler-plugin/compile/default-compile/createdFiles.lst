@@ -1,4 +1,5 @@
 com\geniusmonkey\deckOfCards\controllers\CardsController.class
+com\geniusmonkey\deckOfCards\entity\Hand.class
 com\geniusmonkey\deckOfCards\entity\Card.class
 com\geniusmonkey\deckOfCards\App.class
 com\geniusmonkey\deckOfCards\entity\Deck.class

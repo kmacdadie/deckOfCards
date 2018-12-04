@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.geniusmonkey.deckOfCards.entity.Deck;
+import com.geniusmonkey.deckOfCards.entity.Card;
 
 @RestController
 public class CardsController {
 
-	List<String> cards = new ArrayList<String>();
+	List<Card> discards = new ArrayList<Card>();
 	Deck deck = new Deck();
 	
 	
@@ -30,8 +31,8 @@ public class CardsController {
 	}
 	
 	@RequestMapping(value="/cards/deal", method=RequestMethod.GET)
-	public Deck deal() {
-		return deal();
+	public Card deal() {
+		return deck.deal();
 	}
 	
 	@RequestMapping(value="/cards/shuffle", method=RequestMethod.GET)
@@ -41,13 +42,14 @@ public class CardsController {
 	}
 	
 	@RequestMapping(value="/cards/discard", method=RequestMethod.POST)
-	public String discard(@RequestBody String card) {
-		return "Succcessfully discarded: " + card;
+	public Card discard(@RequestBody Card card) {
+		discards.add(card);
+		return card;
 	}
 	
-	@RequestMapping(value="/cards/cut", method=RequestMethod.GET)
-	public Deck cut() {
-		deck.cut();
+	@RequestMapping(value="/cards/cut", method=RequestMethod.POST)
+	public Deck cut(@RequestBody int position) {
+		deck.cut(position);
 		return deck;
 	}
 	

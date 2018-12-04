@@ -3,17 +3,10 @@ package com.geniusmonkey.deckOfCards.entity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class Deck {
 
-	public static final int DCARDS = 52;
 	private ArrayList<Card> cards;
-	private int half;
-	private List<Card> hand;
-	private Card[] deckOfCards;
-	private int currentCard;
-	
 
 	public Deck() {
 		cards = new ArrayList<Card>();
@@ -22,61 +15,34 @@ public class Deck {
 				cards.add(new Card(j, createCardName(i,j)));
 			}
 		}
-		
-	half = (new Random()).nextInt(cards.size()-1) + 1;
-		for (int i = 0; i < half; i++) {
-			cards.add(cards.remove(0));
-		}
-	}
-	
-	public List<Card> getHand() {
-		return cards;
-	}
-	
-	public void setHand(List<Card> hand) {
-		this.hand = hand;
 	}
 	
 	public List<Card> getCards() {
 		return cards;
 	}
 	
-	public int getHalf() {
-		return half;
+	public Card deal() {
+		Card card = cards.remove(0);
+		System.out.println("Card Dealt: " + card.getCardSuit() + " " + card.getValue());
+		return card;
 	}
-	public void checkHand() {
-		for (Card card : hand) {
-			System.out.println(card.toString());
-		}
-	}
-	
-	public boolean discard(Card card) {
-			return hand.remove(card);
-		}
-	
-	public void deal(Deck deck) {
-		cards.remove(0);
-		hand.add(deck.deal()); 
-	}	
-
+		
 	public void shuffle() {
 		Collections.shuffle(cards);
 	}
 	
-	public void cut() {
-		Collections.rotate(cards, half);			
+	public void cut(int position) {
+		Collections.rotate(cards, position);	// I need it to cut in a certain position	
 	}	
-	
-	//public void rebuild() {
-		//Collections.sort(cards, null);;
-	//}
 				
 	public void order() {
-       Collections.unmodifiableCollection(cards);          
+       Collections.sort(cards, null);       //write a comparator   
     }
 	
-		
-		
+	public void rebuild() {
+		Collections.sort(cards, null);; //takes cards from discard pile and puts back into deck then sorts
+	}
+	
 	private String createCardName(int suit, int value) {
 		return new StringBuilder()
 			.append(determineValueString(value))
