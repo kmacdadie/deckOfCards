@@ -2,16 +2,17 @@ package com.geniusmonkey.deckOfCards.entity;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Deck {
 
-	private ArrayList<Card> cards;
+	private static ArrayList<Card> cards;
 
 	public Deck() {
 		cards = new ArrayList<Card>();
 		for (int i = 0; i < 4; i++) {
-			for (int j = 2; j < 15; j++) {
+			for (int j = 2; j < 15;  j++) {
 				cards.add(new Card(j, createCardName(i,j)));
 			}
 		}
@@ -32,28 +33,41 @@ public class Deck {
 	}
 	
 	public void cut(int position) {
-		Collections.rotate(cards, position);	// I need it to cut in a certain position	
+		Collections.rotate(cards, position);
 	}	
-				
+	
+	public class cardComparator implements Comparator<Card> {
+
+	    public int compare (Card a, Card b) {
+	        if(a.getValue() > b.getValue()) {
+	            return 1;
+	        } else if(a.getValue() < b.getValue()) {
+	            return -1;
+	        } else {
+	            return 0;
+	        }
+	    }
+	}
+
 	public void order() {
-       Collections.sort(cards, null);       //write a comparator   
+		Collections.sort(cards, new cardComparator());   
     }
 	
 	public void rebuild() {
-		Collections.sort(cards, null);; //takes cards from discard pile and puts back into deck then sorts
+		Collections.sort(cards, new cardComparator()); 
 	}
 	
-	private String createCardName(int suit, int value) {
+	private String createCardName(int Suit, int value) {
 		return new StringBuilder()
 			.append(determineValueString(value))
 			.append(" of ")
-			.append(determineSuitString(suit))
+			.append(determineSuitString(Suit))
 			.toString();
 	}
 	
-	private String determineSuitString(int suit) {
+	private String determineSuitString(int Suit) {
 		String result = "";
-		switch(suit) {
+		switch(Suit) {
 			case 0:
 				result = ("Spades");
 				break;
@@ -94,7 +108,4 @@ public class Deck {
 		}
 		return result;
 	}
-
-
-
 }

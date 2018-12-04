@@ -16,14 +16,6 @@ public class CardsController {
 
 	List<Card> discards = new ArrayList<Card>();
 	Deck deck = new Deck();
-	
-	
-	//deal cards
-	
-	//discard
-	
-	//order
-	//rebuild
 
 	@RequestMapping(value="/cards", method=RequestMethod.GET)
 	public Deck getDeck() {
@@ -55,11 +47,13 @@ public class CardsController {
 	
 	@RequestMapping(value="/cards/order", method=RequestMethod.GET)
 	public Deck order() {
+		deck.order();	
 		return deck;
 	}
 	
 	@RequestMapping(value="/cards/rebuild", method=RequestMethod.GET)
 	public Deck rebuild() {
+		Deck deck = new Deck();
 		deck.rebuild();
 		return deck;
 	}

@@ -10,12 +10,11 @@ public class Card {
 		
 	private int value;
 	private String cardSuit;
-	
+
 	public Card(int value, String cardSuit) {
 		this.value = value;
 		this.cardSuit = cardSuit;
 	}
-	
 	
 	@Override
 	public String toString() {
@@ -35,5 +34,4 @@ public class Card {
 	public void setCardSuit(String cardSuit) {
 		this.cardSuit = cardSuit;
 	}
-
 }
