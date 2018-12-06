@@ -3,6 +3,7 @@ package com.geniusmonkey.deckOfCards.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,8 +40,8 @@ public class CardsController {
 		return card;
 	}
 	
-	@RequestMapping(value="/cards/cut", method=RequestMethod.POST)
-	public Deck cut(@RequestBody int position) {
+	@RequestMapping(value="/cards/cut/{position}", method=RequestMethod.GET)
+	public Deck cut(@PathVariable int position) {
 		deck.cut(position);
 		return deck;
 	}
@@ -53,8 +54,7 @@ public class CardsController {
 	
 	@RequestMapping(value="/cards/rebuild", method=RequestMethod.GET)
 	public Deck rebuild() {
-		Deck deck = new Deck();
-		deck.rebuild();
+		deck.rebuild(discards);
 		return deck;
 	}
 }

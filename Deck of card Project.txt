@@ -2,7 +2,7 @@ HTTP 		ENDPOINT/URI		WHAT IT DOES
 
 GET		api/v1/cards		Deal Cards: deals one card off the top of deck.
 GET		api/v1/cards		Shuffle: randomizes all the cards remaining in the deck.
-POST		api/v1/cards/{id}	Discard: sends a specific card to discard pile.
-POST		api/v1/cards		Cut: specify a locataion to split the deck in two and puts bootom half on the top half
+POST		api/v1/cards		Discard: sends a specific card to discard pile.
+GET		api/v1/cards/{position}	Cut: specify a locataion to split the deck in two and puts bootom half on the top half
 GET		api/v1/cards		Order: orders cards in the deck into a specific order, but leaves card in the discard pile where they are.
 GET		api/v1/cards		Rebuild Deck: puts deck back into the default sort order with no discard pile.

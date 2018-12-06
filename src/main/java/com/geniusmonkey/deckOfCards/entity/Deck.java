@@ -31,7 +31,7 @@ public class Deck {
 	public void shuffle() {
 		Collections.shuffle(cards);
 	}
-	
+		
 	public void cut(int position) {
 		Collections.rotate(cards, position);
 	}	
@@ -43,7 +43,7 @@ public class Deck {
 		}
     }
 	
-	public void rebuild() {
+	public void rebuild(List<Card> discards) {
 		Collections.sort(cards, new CardComparator()); 
 	}
 	
