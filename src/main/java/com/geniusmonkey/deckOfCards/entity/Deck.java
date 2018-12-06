@@ -1,9 +1,11 @@
 package com.geniusmonkey.deckOfCards.entity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
 
 public class Deck {
 
@@ -36,9 +38,29 @@ public class Deck {
 		Collections.rotate(cards, position);
 	}	
 	
-	public class cardComparator implements Comparator<Card> {
-
-	    public int compare (Card a, Card b) {
+	public class CardChainedComparator implements Comparator<Card> {
+		private List<Comparator<Card>> listComparators;
+		@SafeVarargs
+		public CardChainedComparator(Comparator<Card>...comparators) {
+			this.listComparators = Arrays.asList(comparators);
+		}
+		public int compare(Card a, Card b) {
+			for(Comparator<Card> comparator : listComparators) {
+				int result = comparator.compare(a, b);
+				if (result != 0) {
+					return result;
+				}
+			}
+			return 0;
+		}
+	}
+	public class SuitComparator implements Comparator<Card> {
+		public int compare(Card a, Card b) {
+			return a.getCardSuit().compareTo(b.getCardSuit());
+		}
+	}
+	public class ValueComparator implements Comparator<Card> {	
+	   public int compare (Card a, Card b) {
 	        if(a.getValue() > b.getValue()) {
 	            return 1;
 	        } else if(a.getValue() < b.getValue()) {
@@ -48,26 +70,26 @@ public class Deck {
 	        }
 	    }
 	}
-
+	
 	public void order() {
-		Collections.sort(cards, new cardComparator());   
+		Collections.sort(cards,	new ValueComparator());
     }
 	
 	public void rebuild() {
-		Collections.sort(cards, new cardComparator()); 
+		Collections.sort(cards, new SuitComparator()); 
 	}
 	
-	private String createCardName(int Suit, int value) {
+	private String createCardName(int cardSuit, int value) {
 		return new StringBuilder()
 			.append(determineValueString(value))
 			.append(" of ")
-			.append(determineSuitString(Suit))
+			.append(determineSuitString(cardSuit))
 			.toString();
 	}
 	
-	private String determineSuitString(int Suit) {
+	private String determineSuitString(int cardSuit) {
 		String result = "";
-		switch(Suit) {
+		switch(cardSuit) {
 			case 0:
 				result = ("Spades");
 				break;
