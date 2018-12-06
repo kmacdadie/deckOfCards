@@ -1,11 +1,9 @@
 package com.geniusmonkey.deckOfCards.entity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
 
 public class Deck {
 
@@ -38,47 +36,40 @@ public class Deck {
 		Collections.rotate(cards, position);
 	}	
 	
-	public class CardChainedComparator implements Comparator<Card> {
-		private List<Comparator<Card>> listComparators;
-		@SafeVarargs
-		public CardChainedComparator(Comparator<Card>...comparators) {
-			this.listComparators = Arrays.asList(comparators);
-		}
-		public int compare(Card a, Card b) {
-			for(Comparator<Card> comparator : listComparators) {
-				int result = comparator.compare(a, b);
-				if (result != 0) {
-					return result;
-				}
-			}
-			return 0;
-		}
-	}
-	public class SuitComparator implements Comparator<Card> {
-		public int compare(Card a, Card b) {
-			return a.getCardSuit().compareTo(b.getCardSuit());
-		}
-	}
-	public class ValueComparator implements Comparator<Card> {	
-	   public int compare (Card a, Card b) {
-	        if(a.getValue() > b.getValue()) {
-	            return 1;
-	        } else if(a.getValue() < b.getValue()) {
-	            return -1;
-	        } else {
-	            return 0;
-	        }
-	    }
-	}
-	
 	public void order() {
-		Collections.sort(cards,	new ValueComparator());
+		Collections.sort(cards,	new CardComparator());
+		for (Card card : cards) {
+			System.out.println(card.getCardSuit() + " : " + card.getValue());
+		}
     }
 	
 	public void rebuild() {
-		Collections.sort(cards, new SuitComparator()); 
+		Collections.sort(cards, new CardComparator()); 
 	}
 	
+	public class CardComparator implements Comparator<Card> {
+		public int compare(Card card1, Card card2) {
+			int firstCheck = getCardSuit(card1) - getCardSuit(card2);
+			if (firstCheck == 0) {
+				return card1.getValue() - card2.getValue();
+			}
+			return firstCheck;
+		}
+	}
+		
+	private int getCardSuit(Card card) {
+		if (card.getCardSuit().equals("Spades")) {
+			return 1;
+		} else if (card.getCardSuit().equals("Hearts")) {
+			return 2;
+		} else if (card.getCardSuit().equals("Clubs")) {
+			return 3;
+		} else if (card.getCardSuit().equals("Diamonds")) {
+			return 4;
+		}
+		return 0;
+	}
+
 	private String createCardName(int cardSuit, int value) {
 		return new StringBuilder()
 			.append(determineValueString(value))
