@@ -7,7 +7,11 @@ import javax.persistence.Id;
 
 @Entity
 public class Card {
-		
+	
+	public Card() {
+        super();
+    }
+	
 	private int value;
 	private String cardSuit;
 
